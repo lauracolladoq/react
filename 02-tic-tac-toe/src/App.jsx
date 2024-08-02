@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import confetti from "canvas-confetti"
 import { Square } from './components/Square.jsx'
 import { TURNS } from './constants'
@@ -14,7 +14,7 @@ function App() {
     return boardFromStorage ? JSON.parse(boardFromStorage) :
       Array(9).fill(null)
   })
-  
+
   const [turn, setTurn] = useState(() => {
     const turnFromStorage = window.localStorage.getItem('turn')
     return turnFromStorage ?? TURNS.X
