@@ -1,22 +1,12 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import { getRandomFact } from './services/fact'
-// const CAT_ENDPOINT_IMAGE_URL = `https://cataas.com/cat/says/${FirstWord}?size=50&color=red&json=true`
+
 const CAT_PREFIX_IMAGE_URL = 'https://cataas.com'
 
-export function App () {
-  const [fact, setFact] = useState()
+// Custom hook para obtener la imagen de un gato
+function useCatImage ({ fact }) {
   const [imageUrl, setImageUrl] = useState()
-
-  // Recupera el fact al cargar la página
-  useEffect(() => { getRandomFact().then(setFact) }, [])
-
-  // Recupera un nuevo fact al hacer click en el botón
-  const handleClick = async () => {
-    getRandomFact().then(setFact)
-    // const newFact = await getRandomFact()
-    // setFact(newFact)
-  }
 
   // Recupera la imagen cada vez que cambia el fact
   useEffect(() => {
@@ -32,6 +22,23 @@ export function App () {
         setImageUrl(url)
       })
   }, [fact])
+
+  return { imageUrl }
+}
+
+export function App () {
+  const [fact, setFact] = useState()
+  const { imageUrl } = useCatImage({ fact })
+
+  // Recupera el fact al cargar la página
+  useEffect(() => { getRandomFact().then(setFact) }, [])
+
+  // Recupera un nuevo fact al hacer click en el botón
+  const handleClick = async () => {
+    getRandomFact().then(setFact)
+    // const newFact = await getRandomFact()
+    // setFact(newFact)
+  }
 
   return (
     <main>
